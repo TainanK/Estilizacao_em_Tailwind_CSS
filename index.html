@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Tech Games - Painel Admin</title>
+
+  <!-- tailwindcss por CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // aqui deixo a cor roxa como principal
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gamer: '#6d28d9',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Chart.js pra fazer os gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+  <!-- menu lateral -->
+  <div class="fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-gray-900 via-purple-900 to-black text-white flex flex-col shadow-xl">
+    <div class="p-6 text-2xl font-bold text-center border-b border-gray-800">🎮 E-Tech Games</div>
+    <nav class="flex-1 overflow-y-auto mt-4">
+      <ul class="space-y-2">
+        <li><a href="#" data-page="home" class="block px-4 py-2 hover:bg-purple-700 rounded">🏠 Home</a></li>
+        <li><a href="#" data-page="dashboard" class="block px-4 py-2 hover:bg-purple-700 rounded">📊 Dashboard</a></li>
+        <li>
+          <a href="#" class="submenu-toggle flex justify-between px-4 py-2 hover:bg-purple-700 rounded">📦 Produtos <span>▼</span></a>
+          <ul class="ml-4 mt-2 space-y-1 hidden submenu">
+            <li><a href="#" data-page="produtos-listar" class="block px-2 py-1 hover:bg-gray-700 rounded">Listar</a></li>
+            <li><a href="#" data-page="produtos-cadastrar" class="block px-2 py-1 hover:bg-gray-700 rounded">Cadastrar</a></li>
+            <li><a href="#" data-page="produtos-importar" class="block px-2 py-1 hover:bg-gray-700 rounded">Importar</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="submenu-toggle flex justify-between px-4 py-2 hover:bg-purple-700 rounded">👥 Clientes <span>▼</span></a>
+          <ul class="ml-4 mt-2 space-y-1 hidden submenu">
+            <li><a href="#" data-page="clientes-listar" class="block px-2 py-1 hover:bg-gray-700 rounded">Listar</a></li>
+            <li><a href="#" data-page="clientes-cadastrar" class="block px-2 py-1 hover:bg-gray-700 rounded">Cadastrar</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- conteudo principal -->
+  <div class="ml-64">
+    <header class="bg-gray-100 p-4 flex justify-between items-center shadow">
+      <h1 class="text-xl font-bold">Painel Administrativo</h1>
+      <div>Admin ⚙️</div>
+    </header>
+
+    <main id="main-content" class="p-4">
+
+      <!-- HOME -->
+      <section id="page-home" class="page-content active">
+        <!-- banner principal -->
+        <div class="relative rounded-xl overflow-hidden shadow-lg">
+          <img src="https://wallpaperaccess.com/full/3143584.jpg" class="w-full h-64 object-cover opacity-90">
+          <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white">
+            <h2 class="text-3xl font-bold">Bem-vindo ao E-Tech Games 🎮</h2>
+            <p class="mt-2 text-lg text-gray-200">Gerencie seus produtos, clientes e acompanhe suas vendas</p>
+          </div>
+        </div>
+
+        <!-- jogos em destaque -->
+        <h3 class="mt-8 text-2xl font-bold">Jogos em Destaque</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+          <div class="bg-white rounded-lg shadow hover:scale-105 transition">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg" class="h-40 w-full object-cover">
+            <div class="p-4">
+              <h4 class="font-semibold">Elden Ring</h4>
+              <p class="text-purple-600 font-bold mt-2">R$ 249,90</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow hover:scale-105 transition">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg" class="h-40 w-full object-cover">
+            <div class="p-4">
+              <h4 class="font-semibold">GTA V</h4>
+              <p class="text-purple-600 font-bold mt-2">R$ 99,90</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow hover:scale-105 transition">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/header.jpg" class="h-40 w-full object-cover">
+            <div class="p-4">
+              <h4 class="font-semibold">Apex Legends</h4>
+              <p class="text-purple-600 font-bold mt-2">Gratuito</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow hover:scale-105 transition">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg" class="h-40 w-full object-cover">
+            <div class="p-4">
+              <h4 class="font-semibold">CS2</h4>
+              <p class="text-purple-600 font-bold mt-2">Gratuito</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section id="page-dashboard" class="page-content hidden">
+        <h2 class="text-2xl font-bold mb-4">Dashboard de Vendas</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-white rounded-lg shadow p-4">
+            <h3 class="font-semibold mb-2">Vendas por Mês</h3>
+            <canvas id="vendasChart"></canvas>
+          </div>
+          <div class="bg-white rounded-lg shadow p-4">
+            <h3 class="font-semibold mb-2">Categorias</h3>
+            <canvas id="categoriaChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- CADASTRAR PRODUTO -->
+      <section id="page-produtos-cadastrar" class="page-content hidden">
+        <h2 class="text-2xl font-bold mb-4">Cadastrar Novo Produto</h2>
+        <form class="bg-white shadow rounded-lg p-6 space-y-4">
+          <div>
+            <label class="font-medium">Nome do Produto</label>
+            <input type="text" class="w-full mt-1 p-2 border rounded">
+          </div>
+          <div>
+            <label class="font-medium">Descrição</label>
+            <textarea class="w-full mt-1 p-2 border rounded"></textarea>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-1">
+              <label class="font-medium">Valor (R$)</label>
+              <input type="number" step="0.01" class="w-full mt-1 p-2 border rounded">
+            </div>
+            <div class="flex-1">
+              <label class="font-medium">Estoque</label>
+              <input type="number" class="w-full mt-1 p-2 border rounded">
+            </div>
+          </div>
+          <button class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Salvar Produto</button>
+        </form>
+      </section>
+
+      <!-- LISTAR PRODUTOS -->
+      <section id="page-produtos-listar" class="page-content hidden">
+        <h2 class="text-2xl font-bold mb-4">Produtos em Estoque</h2>
+        <table class="min-w-full bg-white rounded shadow">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="px-4 py-2 text-left">Nome</th>
+              <th class="px-4 py-2 text-left">Valor</th>
+              <th class="px-4 py-2 text-left">Estoque</th>
+              <th class="px-4 py-2 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t">
+              <td class="px-4 py-2">Exemplo</td>
+              <td class="px-4 py-2">R$ 99,90</td>
+              <td class="px-4 py-2">10</td>
+              <td class="px-4 py-2">
+                <button class="bg-blue-500 text-white px-2 py-1 rounded">Editar</button>
+                <button class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- IMPORTAR PRODUTOS -->
+      <section id="page-produtos-importar" class="page-content hidden">
+        <h2 class="text-2xl font-bold mb-4">Importar Produtos</h2>
+        <form class="bg-white p-6 rounded shadow space-y-4">
+          <input type="file" accept=".csv,.xlsx" class="block w-full border rounded p-2">
+          <button class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Importar</button>
+        </form>
+      </section>
+
+      <!-- CADASTRAR CLIENTE -->
+      <section id="page-clientes-cadastrar" class="page-content hidden">
+        <h2 class="text-2xl font-bold mb-4">Cadastrar Novo Cliente</h2>
+        <form class="bg-white shadow rounded-lg p-6 space-y-4">
+          <input type="text" placeholder="Nome Completo" class="w-full p-2 border rounded">
+          <input type="text" placeholder="Endereço" class="w-full p-2 border rounded">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input type="tel" placeholder="Telefone" class="p-2 border rounded">
+            <input type="email" placeholder="E-mail" class="p-2 border rounded">
+          </div>
+          <button class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Salvar Cliente</button>
+        </form>
+      </section>
+
+      <!-- LISTAR CLIENTES -->
+      <section id="page-clientes-listar" class="page-content hidden">
+        <h2 class="text-2xl font-bold mb-4">Lista de Clientes</h2>
+        <table class="min-w-full bg-white rounded shadow">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="px-4 py-2 text-left">Nome</th>
+              <th class="px-4 py-2 text-left">E-mail</th>
+              <th class="px-4 py-2 text-left">Telefone</th>
+              <th class="px-4 py-2 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- script principal -->
+  <script>
+    // troca de páginas
+    const links = document.querySelectorAll("[data-page]");
+    const sections = document.querySelectorAll(".page-content");
+
+    links.forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        const target = link.getAttribute("data-page");
+        sections.forEach(sec => sec.classList.add("hidden"));
+        document.getElementById(`page-${target}`).classList.remove("hidden");
+      });
+    });
+
+    // abre e fecha os submenus
+    document.querySelectorAll(".submenu-toggle").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const submenu = btn.nextElementSibling;
+        submenu.classList.toggle("hidden");
+      });
+    });
+
+    // gráficos do dashboard
+    const vendasChart = new Chart(document.getElementById("vendasChart"), {
+      type: "bar",
+      data: {
+        labels: ["Jan", "Fev", "Mar", "Abr", "Mai"],
+        datasets: [{
+          label: "Vendas",
+          data: [12, 19, 8, 15, 10],
+          backgroundColor: "#8b5cf6"
+        }]
+      }
+    });
+
+    const categoriaChart = new Chart(document.getElementById("categoriaChart"), {
+      type: "doughnut",
+      data: {
+        labels: ["Ação", "RPG", "Esportes", "Corrida"],
+        datasets: [{
+          data: [30, 25, 20, 25],
+          backgroundColor: ["#8b5cf6", "#a78bfa", "#c4b5fd", "#ddd6fe"]
+        }]
+      }
+    });
+  </script>
+</body>
+</html>
